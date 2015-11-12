@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from pyvirtualdisplay import Display
 from datetime import datetime
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import unicodedata
 import platform
 import smtplib
@@ -145,7 +146,21 @@ def navigate(user_info):
         quit()
 
     #Creating webdriver object to run on Firefox browser binaries.
-    driver = webdriver.Firefox()
+    if platform.system() == 'Darwin':
+
+        path_to_firefox = os.path.join(os.path.expanduser('~'),'Applications','Firefox.app','Contents','MacOS','firefox')
+        
+        import pyvirtualdisplay
+
+        with pyvirtualdisplay.Display(visible=False):
+
+            binary = FirefoxBinary(path_to_firefox)
+
+            driver = webdriver.Firefox(firefox_binary=binary)
+
+    else:
+
+        driver = webdriver.Firefox()
 
     #Different links to register for spring, summer or fall terms
     if user_info[2] == 'spring':
@@ -184,6 +199,8 @@ def navigate(user_info):
 
         print('We apologize, but an error occured while loading the site.')
         print('Plase input your information again.')
+
+        del driver
 
         return navigate(getUserInfo()) 
 
@@ -275,9 +292,11 @@ def navigate(user_info):
 
     time.sleep(350)
 
+    del driver
+
     navigate(user_info)
 
-def main():
+def main(args):
 
     os.system("clear")
 
@@ -292,33 +311,47 @@ def main():
 
     global CURRENT_DAY
 
-    OS = platform.system()
+    try:
 
-    if OS == 'Drawin':
+        cmd_param = str(args[1])
 
-        os.system('brew install firefox')
+        if cmd_param == 'install':
 
-        os.system('easy_install pip')
+            OS = platform.system()
 
-        os.system('pip install pyvirtualdisplay selenium')
+            if OS == 'Darwin':
 
-    elif OS == 'Linux':
+                os.system('brew install caskroom/cask/brew-cask')
 
-        os.system('apt-get install firefox')
+                os.system('brew install Caskroom/cask/firefox')
 
-        os.system('easy_install pip')
+                os.system('easy_install pip')
 
-        os.system('pip install pyvirtualdisplay selenium')
+                os.system('pip install pyvirtualdisplay selenium')
 
-    else:
+            elif OS == 'Linux':
 
-        print('OS not suppoerted. Exiting program now')
-        quit()
+                os.system('apt-get install firefox')
 
-    os.system('clear')
+                os.system('easy_install pip')
+
+                os.system('pip install pyvirtualdisplay selenium')
+
+            else:
+
+                print('OS not suppoerted. Exiting program now')
+                quit()
+
+            os.system('clear')  
+
+        else:
+            pass
+
+    except IndexError:
+        pass
 
     navigate(getUserInfo())
 
 if __name__ == '__main__':
 
-    main()
+    main(sys.argv)
