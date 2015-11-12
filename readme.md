@@ -8,6 +8,7 @@ This is a script that can run heedlessly on a Linux machine to notify a user whe
 Since OS X does not use X server to run GUIs, there’s no way (yet) to run the script headless on OS X (There is an X11 version of firefox available somewhere in the mystical cloud, however it’s downloadable through mac ports and I don’t wanna mess with that. Maybe someone can?)
 
 ‘’’
+
 	brew install caskroom/cask/brew-cask
 
 	#You might need this	
@@ -20,11 +21,13 @@ Since OS X does not use X server to run GUIs, there’s no way (yet) to run the 
 
 	pip install pyvirtualdisplay selenium
 
+
 ‘’’
 
 #Linux
 
-###Note: I run the script heedlessly on raspberry pi, and the version of firefox for RPI is called iceweasel. I’ll leave installing that to the user. (as ease as: apt-get install iceweasel) 
+###Note: 
+I run the script heedlessly on raspberry pi, and the version of firefox for RPI is called iceweasel. I’ll leave installing that to the user. (as easy as: apt-get install iceweasel) 
 
 
 ‘’’
@@ -34,7 +37,7 @@ Since OS X does not use X server to run GUIs, there’s no way (yet) to run the 
 
 	apt-get install xvfb
 	
-	#If you don’t have pip already. Why would’t you?
+	#if you don’t have pip already. Why would’t you?
 	easy_install pip
 
 	pip install pyvirtualdisplay selenium
