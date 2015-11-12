@@ -309,22 +309,44 @@ def navigate(user_info):
 
     class_list = unicodedata.normalize('NFKD', class_list).encode('ascii','ignore')
 
-    class_index = class_list.index(str(user_info[3]))
+    POSSIBLE_COURSE = False
 
-    class_neighborhood = class_list[class_index:(class_index+100)]
+    try:
+
+        class_index = class_list.index(str(user_info[3]))
+
+        class_neighborhood = class_list[class_index:(class_index+100)]
+
+        POSSIBLE_COURSE = True
+
+    except ValueError:
+        pass
 
     if(user_info[3].upper() in class_list):
 
-        if not 'NO SECTIONS AVAILABLE' in class_neighborhood:
+        if POSSIBLE_COURSE:
 
-            if CELL_PROVIDED:
+            if not 'NO SECTIONS AVAILABLE' in class_neighborhood:
 
-                sendText(user_info)
-                quit()
-            
-            else:     
-                sendEmail(user_info)
-                quit()
+                if CELL_PROVIDED:
+
+                    sendText(user_info)
+                    os.system('killall firefox')
+
+                    if 'raspberrypi' in os.uname():
+
+                        os.system('killall iceweasel')
+
+                    quit()
+                
+                else:     
+                    sendEmail(user_info)
+                    os.system('killall firefox')
+
+                    if 'raspberrypi' in os.uname():
+
+                        os.system('killall iceweasel')
+                    quit()
 
     os.system('killall firefox')
 
