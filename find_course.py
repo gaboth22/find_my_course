@@ -245,7 +245,7 @@ def navigate(user_info):
 
         pass
 
-    print('Login succesful.')               
+    print('Login successful.')               
 
     #Find the 'Search All Courses' label and click on it
     driver.find_element_by_link_text('Search All Courses').click()
