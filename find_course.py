@@ -61,23 +61,27 @@ def sendText(user_info):
 
     metro_list = ('metropcs', 'metro-pcs')
 
-    if (str(user_info[4][1])).lower() == 'att':
+    att_list = ('att', 'at&t')
+
+    carrier = ((str(user_info[4][1])).lower()).strip()
+
+    if carrier in att_list:
 
         to = str(user_info[4][0])+'@txt.att.net'
     
-    elif (str(user_info[4][1])).lower() in tmo_list:
+    elif carrier in tmo_list:
 
         to = str(user_info[4][0])+'@tmomail.net' 
     
-    elif (str(user_info[4][1])).lower() == 'sprint':
+    elif carrier == 'sprint':
 
         to = str(user_info[4][0])+'@messaging.sprintpcs.com' 
 
-    elif (str(user_info[4][1])).lower() == 'verizon':
+    elif carrier == 'verizon':
 
         to = str(user_info[4][0])+'@vtext.com' 
 
-    elif (str(user_info[4][1])).lower() in metro_list:
+    elif carrier in metro_list:
 
         to = str(user_info[4][0])+'@mymetropcs.com'
 
