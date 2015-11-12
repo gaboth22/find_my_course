@@ -1,3 +1,7 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from pyvirtualdisplay import Display
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from datetime import datetime
 import unicodedata
 import platform
@@ -130,11 +134,6 @@ def sendEmail(user_info):
     smtpserver.close()     
 
 def navigate(user_info):
-
-    from selenium import webdriver
-    from selenium.webdriver.common.keys import Keys
-    from pyvirtualdisplay import Display
-    from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
     display = Display(visible=0, size=(800, 600))
 
@@ -312,46 +311,46 @@ def main(args):
 
     global CURRENT_DAY
 
-    try:
+    # try:
 
-        cmd_param = str(args[1])
+    #     cmd_param = str(args[1])
 
-        if cmd_param == 'install':
+    #     if cmd_param == 'install':
 
-            OS = platform.system()
+    #         OS = platform.system()
 
-            if OS == 'Darwin':
+    #         if OS == 'Darwin':
 
-                os.system('brew install caskroom/cask/brew-cask')
+    #             os.system('brew install caskroom/cask/brew-cask')
 
-                os.system('brew link brew-cask')
+    #             os.system('brew link brew-cask')
 
-                os.system('brew install Caskroom/cask/firefox')
+    #             os.system('brew install Caskroom/cask/firefox')
 
-                os.system('easy_install pip')
+    #             os.system('easy_install pip')
 
-                os.system('pip install pyvirtualdisplay selenium')
+    #             os.system('pip install pyvirtualdisplay selenium')
 
-            elif OS == 'Linux':
+    #         elif OS == 'Linux':
 
-                os.system('apt-get install firefox')
+    #             os.system('apt-get install firefox')
 
-                os.system('easy_install pip')
+    #             os.system('easy_install pip')
 
-                os.system('pip install pyvirtualdisplay selenium')
+    #             os.system('pip install pyvirtualdisplay selenium')
 
-            else:
+    #         else:
 
-                print('OS not suppoerted. Exiting program now')
-                quit()
+    #             print('OS not suppoerted. Exiting program now')
+    #             quit()
 
-            os.system('clear')  
+    #         os.system('clear')  
 
-        else:
-            pass
+    #     else:
+    #         pass
 
-    except IndexError:
-        pass
+    # except IndexError:
+    #     pass
 
     navigate(getUserInfo())
 
