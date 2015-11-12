@@ -2,12 +2,14 @@
 
 This is a script that can run heedlessly on a Linux machine to notify a user when a course that ran out of spots has an opening in the UF’s ISIS website. The script asks the user for ISIS credentials and a phone number if the user desires to be notified via text message when the course opens up (if it ever does). If the cell phone field is left blank, a notification will be sent to the user’s uf-email account. If the script is left running, the script will continue running for 3 days and then quit. During those three days, it will check the website every three minutes to see if the course became available.
 
+#INSTALL REQUIREMENTS AT YOUR OWN RISK I CANNOT GUARANTEE IT WILL WORK OR THAT IT WONT DAMAGE YOUR COMPUTER. FOR ALL I KNOW I WILL. I GIVE NO WARRANTIES OF ANY KIND.
+
 #Mac requirements
 
 ###Note:
 Since OS X does not use X server to run GUIs, there’s no way (yet) to run the script headless on OS X (There is an X11 version of firefox available somewhere in the mystical cloud, however it’s downloadable through mac ports and I don’t wanna mess with that. Maybe someone can?)
 
-‘’’
+'''
 
 	brew install caskroom/cask/brew-cask
 
@@ -22,7 +24,7 @@ Since OS X does not use X server to run GUIs, there’s no way (yet) to run the 
 	pip install pyvirtualdisplay selenium
 
 
-‘’’
+'''
 
 #Linux
 
@@ -30,7 +32,7 @@ Since OS X does not use X server to run GUIs, there’s no way (yet) to run the 
 I run the script heedlessly on raspberry pi, and the version of firefox for RPI is called iceweasel. I’ll leave installing that to the user. (as easy as: apt-get install iceweasel) 
 
 
-‘’’
+'''
 	
 	#as root
 	apt-get install firefox
@@ -42,7 +44,7 @@ I run the script heedlessly on raspberry pi, and the version of firefox for RPI 
 
 	pip install pyvirtualdisplay selenium
 
-‘’’
+'''
 
 #How to use?
 
