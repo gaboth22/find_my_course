@@ -67,19 +67,19 @@ def sendText(user_info):
     
     elif (str(user_info[4][1])).lower() in tmo_list:
 
-        to = to = str(user_info[4][0])+'@tmomail.net' 
+        to = str(user_info[4][0])+'@tmomail.net' 
     
     elif (str(user_info[4][1])).lower() == 'sprint':
 
-        to = to = str(user_info[4][0])+'@messaging.sprintpcs.com' 
+        to = str(user_info[4][0])+'@messaging.sprintpcs.com' 
 
     elif (str(user_info[4][1])).lower() == 'verizon':
 
-        to = to = str(user_info[4][0])+'@vtext.com' 
+        to = str(user_info[4][0])+'@vtext.com' 
 
     elif (str(user_info[4][1])).lower() in metro_list:
 
-        to = to = str(user_info[4][0])+'@mymetropcs.com'
+        to = str(user_info[4][0])+'@mymetropcs.com'
 
     else:
 
@@ -144,10 +144,6 @@ def sendEmail(user_info):
     smtpserver.close()     
 
 def navigate(user_info):
-
-    display = Display(visible=0, size=(800, 600))
-
-    display.start()
 
     #getting the current day
     CURRENT_DAY = ((((str(datetime.now())).split('-'))[2]).split(' '))[0]
@@ -338,6 +334,10 @@ def main(args):
     START_DAY = ((((str(datetime.now())).split('-'))[2]).split(' '))[0]
 
     global CURRENT_DAY
+
+    display = Display(visible=0, size=(800, 600))
+
+    display.start()
 
     navigate(getUserInfo())
 
