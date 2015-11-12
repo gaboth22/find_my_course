@@ -45,29 +45,39 @@ def getUserInfo():
         if('-' in CELL):
             CELL = CELL.replace('-','')
 
+        if('(' in CELL):
+            CELL = CELL.replace('(', '')
+
+        if(')' in CELL):
+            CELL = CELL.replace(')', '')
+
         CARRIER = CELL_INFO.split(',')[1]
         
         return (GATORLINK_ID, PASSWORD, TERM, COURSE, (CELL,CARRIER))
 
 def sendText(user_info):
 
-    if (str(user_info[4][1])) == 'att':
+    tmo_list = ('tmobile', 't-mobile')
+
+    metro_list = ('metropcs', 'metro-pcs')
+
+    if (str(user_info[4][1])).lower() == 'att':
 
         to = str(user_info[4][0])+'@txt.att.net'
     
-    elif (str(user_info[4][1])) == 'tmobile':
+    elif (str(user_info[4][1])).lower() in tmo_list:
 
         to = to = str(user_info[4][0])+'@tmomail.net' 
     
-    elif (str(user_info[4][1])) == 'sprint':
+    elif (str(user_info[4][1])).lower() == 'sprint':
 
         to = to = str(user_info[4][0])+'@messaging.sprintpcs.com' 
 
-    elif (str(user_info[4][1])) == 'verizon':
+    elif (str(user_info[4][1])).lower() == 'verizon':
 
         to = to = str(user_info[4][0])+'@vtext.com' 
 
-    elif (str(user_info[4][1])) == 'metropcs':
+    elif (str(user_info[4][1])).lower() in metro_list:
 
         to = to = str(user_info[4][0])+'@mymetropcs.com'
 
@@ -278,23 +288,29 @@ def navigate(user_info):
 
     class_list = unicodedata.normalize('NFKD', class_list).encode('ascii','ignore')
 
+    class_index = class_list.index(str(user_info[3]))
+
+    class_neighborhood = class_list[class_index:(class_index+100)]
+
     if(user_info[3].upper() in class_list):
 
-        if CELL_PROVIDED:
+        if not 'NO SECTIONS AVAILABLE' in class_neighborhood:
 
-            sendText(user_info)
-            quit()
-        
-        else:     
-            sendEmail(user_info)
-            quit()
+            if CELL_PROVIDED:
+
+                sendText(user_info)
+                quit()
+            
+            else:     
+                sendEmail(user_info)
+                quit()
 
     os.system('killall firefox')
 
     print('Course not found :(\nWill continue running until course is found.')
     print('Maximum running time will be 3 days.')
 
-    time.sleep(350)
+    time.sleep(300)
 
     del driver
 
@@ -310,47 +326,6 @@ def main(args):
     START_DAY = ((((str(datetime.now())).split('-'))[2]).split(' '))[0]
 
     global CURRENT_DAY
-
-    # try:
-
-    #     cmd_param = str(args[1])
-
-    #     if cmd_param == 'install':
-
-    #         OS = platform.system()
-
-    #         if OS == 'Darwin':
-
-    #             os.system('brew install caskroom/cask/brew-cask')
-
-    #             os.system('brew link brew-cask')
-
-    #             os.system('brew install Caskroom/cask/firefox')
-
-    #             os.system('easy_install pip')
-
-    #             os.system('pip install pyvirtualdisplay selenium')
-
-    #         elif OS == 'Linux':
-
-    #             os.system('apt-get install firefox')
-
-    #             os.system('easy_install pip')
-
-    #             os.system('pip install pyvirtualdisplay selenium')
-
-    #         else:
-
-    #             print('OS not suppoerted. Exiting program now')
-    #             quit()
-
-    #         os.system('clear')  
-
-    #     else:
-    #         pass
-
-    # except IndexError:
-    #     pass
 
     navigate(getUserInfo())
 
