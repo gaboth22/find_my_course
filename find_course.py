@@ -1,8 +1,4 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from pyvirtualdisplay import Display
 from datetime import datetime
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import unicodedata
 import platform
 import smtplib
@@ -134,6 +130,15 @@ def sendEmail(user_info):
     smtpserver.close()     
 
 def navigate(user_info):
+
+    from selenium import webdriver
+    from selenium.webdriver.common.keys import Keys
+    from pyvirtualdisplay import Display
+    from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+
+    display = Display(visible=0, size=(800, 600))
+
+    display.start()
 
     #getting the current day
     CURRENT_DAY = ((((str(datetime.now())).split('-'))[2]).split(' '))[0]
@@ -300,10 +305,6 @@ def main(args):
 
     os.system("clear")
 
-    display = Display(visible=0, size=(800, 600))
-
-    display.start()
-
     global START_DAY 
 
     #Getting the day that the program started. Will be 3, if the program was started on 11/3
@@ -322,6 +323,8 @@ def main(args):
             if OS == 'Darwin':
 
                 os.system('brew install caskroom/cask/brew-cask')
+
+                os.system('brew link brew-cask')
 
                 os.system('brew install Caskroom/cask/firefox')
 
