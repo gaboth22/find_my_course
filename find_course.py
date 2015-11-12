@@ -200,6 +200,10 @@ def navigate(user_info):
         #DOWNSIDE: It will close all firefox instances running on the OS.
         os.system('killall firefox')
 
+        if 'raspberrypi' in os.uname():
+
+            os.system('killall iceweasel')
+
         #Go back to asking for user info
         return navigate(getUserInfo())
 
@@ -248,6 +252,10 @@ def navigate(user_info):
             print('\nYour username or password is incorret. Please try again.\n')
 
             os.system('killall firefox')
+
+            if 'raspberrypi' in os.uname():
+
+                os.system('killall iceweasel')
 
             return navigate(getUserInfo())
 
@@ -307,10 +315,14 @@ def navigate(user_info):
 
     os.system('killall firefox')
 
+    if 'raspberrypi' in os.uname():
+
+        os.system('killall iceweasel')
+
     print('Course not found :(\nWill continue running until course is found.')
     print('Maximum running time will be 3 days.')
 
-    time.sleep(300)
+    time.sleep(180)
 
     del driver
 
