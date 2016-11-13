@@ -23,7 +23,7 @@ import getpass
 import os
 import sys
 import time
- 
+
 def getUserInfo():
     GATORLINK_ID = str(raw_input('GatorLink Username: '))
     PASSWORD = str(getpass.getpass('Password:'))
@@ -36,11 +36,11 @@ def getUserInfo():
     print('If left blank you will be sent an email to your uf-email account.\n')
 
     CELL_INFO = str(raw_input('Cell phone number and carrier (cell-phone-number,carrier): '))
-    global CELL_PROVIDED 
+    global CELL_PROVIDED
     if not CELL_INFO:
         CELL_PROVIDED = False
         return (GATORLINK_ID, PASSWORD, TERM, COURSE)
-    else: 
+    else:
         CELL_PROVIDED = True
         CELL = CELL_INFO.split(',')[0]
         if ' ' in CELL:
@@ -52,7 +52,7 @@ def getUserInfo():
         if(')' in CELL):
             CELL = CELL.replace(')', '')
         CARRIER = CELL_INFO.split(',')[1]
-   
+
         return (GATORLINK_ID, PASSWORD, TERM, COURSE, (CELL,CARRIER))
 
 def sendText(user_info):
@@ -63,11 +63,11 @@ def sendText(user_info):
     if carrier in att_list:
         to = str(user_info[4][0])+'@txt.att.net'
     elif carrier in tmo_list:
-        to = str(user_info[4][0])+'@tmomail.net' 
+        to = str(user_info[4][0])+'@tmomail.net'
     elif carrier == 'sprint':
-        to = str(user_info[4][0])+'@messaging.sprintpcs.com' 
+        to = str(user_info[4][0])+'@messaging.sprintpcs.com'
     elif carrier == 'verizon':
-        to = str(user_info[4][0])+'@vtext.com' 
+        to = str(user_info[4][0])+'@vtext.com'
     elif carrier in metro_list:
         to = str(user_info[4][0])+'@mymetropcs.com'
     else:
@@ -108,7 +108,7 @@ def sendEmail(user_info):
     \nA spot opened up for your course (%s) \nLogin to ISIS and register before someone else takes it!
           """ %user_info[3]
     smtpserver.sendmail(office365_user, to, msg)
-    smtpserver.close()     
+    smtpserver.close()
 
 def navigate(user_info):
     #getting the current day
@@ -143,20 +143,22 @@ def navigate(user_info):
         os.system('killall firefox')
         if 'raspberrypi' in os.uname():
             os.system('killall iceweasel')
+        if platform.system() == 'Darwin':
+            os.system('pkill firefox')
         #Go back to asking for user info
         return navigate(getUserInfo())
 
     time.sleep(1)
-    try:    
-        assert 'UF Authentication' in driver.title, 'ERROR: Failed to load registration login site'
+    try:
+        assert 'Web Login Service - University of Florida' in driver.title, 'ERROR: Failed to load registration login site'
     except AssertionError:
         print('We apologize, but an error occured while loading the site.')
         print('Plase input your information again.')
         del driver
-        
-        return navigate(getUserInfo()) 
 
-    print('\nAuthenticating username and password...')       
+        return navigate(getUserInfo())
+
+    print('\nAuthenticating username and password...')
     #As soon the isis login website loads, find the input tag whose name is 'j_username'
     username = driver.find_element_by_name('j_username')
     #Pass the username to the username field
@@ -172,18 +174,19 @@ def navigate(user_info):
         try:
             #if the username or password are incorrect, an error will occur
             #check if error was generated
-            driver.find_element_by_xpath('//p[@class=\'error\']')
+            driver.find_element_by_xpath("//div[contains(@class, 'error')]")
             print('\nYour username or password is incorret. Please try again.\n')
             os.system('killall firefox')
             if 'raspberrypi' in os.uname():
                 os.system('killall iceweasel')
             return navigate(getUserInfo())
         except NoSuchElementException:
-            pass 
+            pass
     except NameError:
         pass
-    print('Login successful.')               
+    print('Login successful.')
     #Find the 'Search All Courses' label and click on it
+    time.sleep(1)
     driver.find_element_by_link_text('Search All Courses').click()
     time.sleep(1)
     #Find the 'Course Number' label and clikc on it
@@ -199,6 +202,7 @@ def navigate(user_info):
     course.send_keys(Keys.RETURN)
     #Find classes in list
     class_list = (driver.find_element_by_id('wellbody').text)
+    time.sleep(1)
     class_list = unicodedata.normalize('NFKD', class_list).encode('ascii','ignore')
     POSSIBLE_COURSE = False
     try:
@@ -216,7 +220,7 @@ def navigate(user_info):
                     if 'raspberrypi' in os.uname():
                         os.system('killall iceweasel')
                     quit()
-                else:     
+                else:
                     sendEmail(user_info)
                     os.system('killall firefox')
                     if 'raspberrypi' in os.uname():
@@ -233,7 +237,7 @@ def navigate(user_info):
 
 def main(args):
     os.system("clear")
-    global START_DAY 
+    global START_DAY
     #Getting the day that the program started. Will be 3, if the program was started on 11/3
     START_DAY = ((((str(datetime.now())).split('-'))[2]).split(' '))[0]
     global CURRENT_DAY
