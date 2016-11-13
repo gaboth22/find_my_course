@@ -31,8 +31,10 @@ def getUserInfo():
     COURSE = str(raw_input('Course (e.g. ENC1101): '))
 
     print('\nIf you want to be notified via text message when a course opens up')
-    print('please input your phone number and carrier (e.g. 354-543-1234,att)')
+    print('please input your phone number and carrier as shown below, including the comma')
+    print('                                           (e.g. 354-543-1234,att)\n')
     print('The supported carries are: att, tmobile, sprint, verizon, metropcs\n')
+    print('                                           Written as shown above.\n')
     print('If left blank you will be sent an email to your uf-email account.\n')
 
     CELL_INFO = str(raw_input('Cell phone number and carrier (cell-phone-number,carrier): '))
@@ -114,9 +116,10 @@ def navigate(user_info):
     #getting the current day
     CURRENT_DAY = ((((str(datetime.now())).split('-'))[2]).split(' '))[0]
     #if three days have passed and no course was found. Exit the program
-    if (int(CURRENT_DAY) - int(START_DAY)) >= 3:
+    if abs(int(CURRENT_DAY) - int(START_DAY)) >= 3:
         print('3 days have passed. Course was not found.')
-        print('Program will exit now.')
+        print('Program will exit now. Goodbye')
+
         quit()
     #Creating webdriver object to run on Firefox browser binaries.
     if platform.system() == 'Darwin':
@@ -206,7 +209,7 @@ def navigate(user_info):
     class_list = unicodedata.normalize('NFKD', class_list).encode('ascii','ignore')
     POSSIBLE_COURSE = False
     try:
-        class_index = class_list.index(str(user_info[3]))
+        class_index = class_list.index(str(user_info[3].upper()))
         class_neighborhood = class_list[class_index:(class_index+100)]
         POSSIBLE_COURSE = True
     except ValueError:
