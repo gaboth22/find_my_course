@@ -23,6 +23,7 @@ import getpass
 import os
 import sys
 import time
+import random
 
 def getUserInfo():
     GATORLINK_ID = str(raw_input('GatorLink Username: '))
@@ -234,7 +235,10 @@ def navigate(user_info):
         os.system('killall iceweasel')
     print('Course not found :(\nWill continue running until course is found.')
     print('Maximum running time will be 3 days.')
-    time.sleep(180)
+    #wait a random interval between 3 and 7 minutes so requests are no cyclical at
+    #exactly every three minutes
+    wait_time = random.randint(3,7)*60
+    time.sleep(wait_time)
     del driver
     navigate(user_info)
 
