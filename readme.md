@@ -1,3 +1,7 @@
+#UPDATE:
+This code does not work with the newer versions of firefox or selenium as the firefox webdriver is deprecated.
+It was reported to work with the chromedriver and google chrome on OS X instead.
+
 #What’s this?
 
 This is a script that can run headlessly on a Linux machine to notify a user when a course that ran out of spots has an opening in UF’s ISIS website. The script asks the user for ISIS credentials and a phone number if the user desires to be notified via text message when the course opens up (if it ever does). If the cell phone field is left blank, a notification will be sent to the user’s uf-email account. If the script is left running, the script will continue running for 3 days and then quit. During those three days, it will check the website every three minutes to see if the course became available.
