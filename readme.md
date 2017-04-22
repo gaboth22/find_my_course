@@ -1,6 +1,6 @@
-# UPDATE:
+s# UPDATE:
 
-The code does work with firefox. But delays need to be increased, and a delay needs to be added in between every interaction with the UF site. i.e. a delay needs to be added before every drive.funtion() call. A 10 second delay should do. Also, the US site gets shut down overnight, so you might need a bash script that relaunches the script, and hard coded credentials.
+The code does work with firefox. But delays need to be increased, and a delay needs to be added in between every interaction with the UF site. i.e. a delay needs to be added before every driver.funtion() call. A 10 second delay should do. Also, the US site gets shut down overnight, so you might need a bash script that relaunches the script, and hard coded credentials.
 
 # UPDATE:
 This code does not work with the newer versions of firefox or selenium as the firefox webdriver is deprecated.
